@@ -19,6 +19,6 @@ export class MessageService {
   }
 
   public setCoords(i: number, j: number) {
-    this.message = `Current Coordinates: [${i}, ${j}]`;
+    this.message = `Move with arrow keys or by clicking the buttons. Current Coordinates: [${i}, ${j}]`;
   }
 }

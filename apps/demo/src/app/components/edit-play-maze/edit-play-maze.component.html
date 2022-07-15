@@ -9,12 +9,12 @@
 
   <div class="relative">
     <div *ngIf="editOrPlay" class="flex-horizontal">
-      <p>*Preview only</p>
+      <p style="color: red">*Preview only</p>
       <button class="save" (click)="toggleEditOrPlay()" [disabled]="!isValidMaze">
         {{isValidMaze ? 'Save Maze and Play': 'Invalid Maze'}}
       </button>
     </div>
-    
+
     <button *ngIf="!editOrPlay" class="link" (click)="toggleEditOrPlay()">
       Edit Maze
     </button>

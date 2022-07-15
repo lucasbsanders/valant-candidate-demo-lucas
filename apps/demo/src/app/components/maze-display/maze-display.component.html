@@ -4,18 +4,18 @@
     <div class="square flex-center relative"
     [ngClass]="{'current-selection': isSelectedSquare(i, j) && !this.editOrPlay, 'start': space === 'S', 'end': space === 'E', 'path': space === 'O', 'wall': space === 'X'}"
     (click)="clickEditSpace(i, j)">
-      {{space}}
+      <p>{{space}}</p>
       <button class="arrow right" *ngIf="isValidMove(i, j, 'right')" (click)="moveFromSpaceIfValid(i, j, 'right')">
-        ▶
+        ➡
       </button>
       <button class="arrow left" *ngIf="isValidMove(i, j, 'left')" (click)="moveFromSpaceIfValid(i, j, 'left')">
-        ◀
+        ⬅
       </button>
       <button class="arrow up" *ngIf="isValidMove(i, j, 'up')" (click)="moveFromSpaceIfValid(i, j, 'up')">
-        ▲
+        ⬆
       </button>
       <button class="arrow down" *ngIf="isValidMove(i, j, 'down')" (click)="moveFromSpaceIfValid(i, j, 'down')">
-        ▼
+        ⬇
       </button>
     </div>
     

@@ -1,7 +1,7 @@
 <div class="container">
   <p>{{instructions}}</p>
   <p>SOXO<br>XOOE</p>
-  <textarea class="input-maze-box" [value]="mazeAsText" (input)="inputMaze($event)"></textarea>
+  <textarea class="input-maze-box" spellcheck="false" [value]="mazeAsText" (input)="inputMaze($event)"></textarea>
   <div>
     <button class="save" (click)="saveMaze()" [disabled]="!validInput">
       {{validInput ? 'Preview Maze' : 'Invalid Maze'}}
