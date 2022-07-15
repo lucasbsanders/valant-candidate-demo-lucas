@@ -3,10 +3,6 @@
   margin: .5rem 0;
 }
 
-.float-right {
-  float: inline-end;
-}
-
 .flex-center {
   display: flex;
   justify-content: center;
@@ -14,54 +10,19 @@
   flex-direction: column;
 }
 
-.flex-horizontal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-}
-
 .square {
   width: 5rem;
   height: 5rem;
-  margin: 0 .25rem;
-
+  margin: 0 .1rem;
   border: 3px solid darkslategray;
-}
-
-button {
-  padding: .5rem 2rem;
-}
-
-button.link {
-  background-color: transparent;
-  border: none;
-  color: blue;
-  text-decoration: underline;
-}
-
-button.link:hover {
-  color: darkblue;
-}
-
-button.save {
-  background-color: blue;
-  color: white;
-  border: 2px solid darkblue;
-  border-radius: 1rem;
-}
-
-button.save:hover {
-  background-color: darkblue;
-}
-
-button.save:disabled,
-button.save:disabled:hover {
-  background-color: darkslategray;
 }
 
 .inline-block {
   display: inline-block;
+}
+
+.relative {
+  position: relative;
 }
 
 .current-selection {
@@ -69,8 +30,24 @@ button.save:disabled:hover {
   border-radius: 8px;
 }
 
-.relative {
-  position: relative;
+div.start {
+  background-color: lightgoldenrodyellow;
+}
+
+div.end {
+  background-color: lightblue;
+}
+
+div.path {
+  background-color: lightgreen;
+}
+
+div.wall {
+  background-color: rgb(255, 156, 156);
+}
+
+button {
+  padding: .5rem 2rem;
 }
 
 button.arrow {
@@ -81,40 +58,24 @@ button.arrow {
   animation: pulse .6s linear infinite;
 }
 
-.up {
+button.up {
   top: 0;
   padding: 0 .5rem;
 }
 
-.down {
+button.down {
   bottom: 0;
   padding: 0 .5rem;
 }
 
-.left {
+button.left {
   left: 5px;
   padding: .5rem 0;
 }
 
-.right {
+button.right {
   right: 5px;
   padding: .5rem 0;
-}
-
-.start {
-  background-color: lightgoldenrodyellow;
-}
-
-.end {
-  background-color: lightblue;
-}
-
-.path {
-  background-color: lightgreen;
-}
-
-.wall {
-  background-color: rgb(255, 156, 156);
 }
 
 @keyframes pulse {

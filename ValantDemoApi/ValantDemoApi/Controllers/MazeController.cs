@@ -18,24 +18,11 @@ namespace ValantDemoApi.Controllers
             _logger = logger;
             _memoryCache = memoryCache;
         }
-        
-
-        [HttpGet("/Moves")]
-        public IEnumerable<string> GetNextAvailableMoves()
-        {
-          return new List<string> {"Up", "Down", "Left", "Right"};
-        }
 
         [HttpGet("/Maze")]
         public IEnumerable<IEnumerable<string>> GetCurrentMaze()
         {
-          IEnumerable<IEnumerable<string>> result;
-          if (!this._memoryCache.TryGetValue(MAZE_KEY, out result)) {
-            this._memoryCache.Set(MAZE_KEY, getDefaultList());
-            return (IEnumerable<IEnumerable<string>>)this._memoryCache.Get(MAZE_KEY);
-          }
-          
-          return result;
+          return _memoryCache.GetOrCreate(MAZE_KEY, entry => getDefaultList());
         }
 
         [HttpPost("/Maze")]

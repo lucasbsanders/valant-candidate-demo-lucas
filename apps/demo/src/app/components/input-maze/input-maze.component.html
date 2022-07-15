@@ -1,1 +1,13 @@
-<p>input-maze works!</p>
+<div class="container">
+  <p>{{instructions}}</p>
+  <p>SOXO<br>XOOE</p>
+  <textarea class="input-maze-box" [value]="mazeAsText" (input)="inputMaze($event)"></textarea>
+  <div>
+    <button class="save" (click)="saveMaze()" [disabled]="!validInput">
+      {{validInput ? 'Preview Maze' : 'Invalid Maze'}}
+    </button>
+  </div>
+  <div>
+    <button class="cancel" (click)="closeBox()">Cancel</button>
+  </div>
+</div>

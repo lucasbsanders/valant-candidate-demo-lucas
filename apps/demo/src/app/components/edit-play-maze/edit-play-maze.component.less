@@ -3,8 +3,8 @@
   margin: .5rem 0;
 }
 
-.float-right {
-  float: inline-end;
+.relative {
+  position: relative;
 }
 
 .flex-center {
@@ -21,30 +21,9 @@
   flex-direction: row;
 }
 
-.square {
-  width: 5rem;
-  height: 5rem;
-  margin: 0 .25rem;
-
-  border: 3px solid darkslategray;
-}
-
-button {
-  padding: .5rem 2rem;
-}
-
-button.link {
-  background-color: transparent;
-  border: none;
-  color: blue;
-  text-decoration: underline;
-}
-
-button.link:hover {
-  color: darkblue;
-}
-
 button.save {
+  padding: .5rem 2rem;
+  margin-left: 1rem;
   background-color: blue;
   color: white;
   border: 2px solid darkblue;
@@ -60,71 +39,14 @@ button.save:disabled:hover {
   background-color: darkslategray;
 }
 
-.inline-block {
-  display: inline-block;
-}
-
-.current-selection {
-  border: 3px solid red;
-  border-radius: 8px;
-}
-
-.relative {
-  position: relative;
-}
-
-button.arrow {
+button.link {
+  padding: .5rem;
   background-color: transparent;
   border: none;
-  position: absolute;
-  margin: 0;
-  animation: pulse .6s linear infinite;
+  color: blue;
+  text-decoration: underline;
 }
 
-.up {
-  top: 0;
-  padding: 0 .5rem;
-}
-
-.down {
-  bottom: 0;
-  padding: 0 .5rem;
-}
-
-.left {
-  left: 5px;
-  padding: .5rem 0;
-}
-
-.right {
-  right: 5px;
-  padding: .5rem 0;
-}
-
-.start {
-  background-color: lightgoldenrodyellow;
-}
-
-.end {
-  background-color: lightblue;
-}
-
-.path {
-  background-color: lightgreen;
-}
-
-.wall {
-  background-color: rgb(255, 156, 156);
-}
-
-@keyframes pulse {
-  0% {
-      transform: scale(1.2);
-  }
-  50% {
-      transform: scale(1.4);
-  }
-  100% {
-      transform: scale(1.2);
-  }
+button.link:hover {
+  color: darkblue;
 }

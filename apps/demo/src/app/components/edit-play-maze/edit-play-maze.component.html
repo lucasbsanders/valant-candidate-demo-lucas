@@ -1,18 +1,28 @@
 <div class="row flex-center">
-  <p *ngIf="message.length > 0">{{message}}</p>
-
   <div class="flex-horizontal">
-    <button [ngClass]="{'link' : !editOrPlay, 'save': editOrPlay}" (click)="toggleEditOrPlay()" [disabled]="!isValidMaze">
-      {{editOrPlay ? (isValidMaze ? 'Save Maze and Play': 'Invalid Maze') : 'Edit Maze'}}
-    </button>
-    <button *ngIf="editOrPlay" class="save" (click)="showInput=!showInput">
+    <p *ngIf="message.length > 0">{{message}}</p>
+
+    <button *ngIf="editOrPlay" class="link" (click)="showInput=!showInput">
       Input Maze as Text
     </button>
   </div>
-</div>
 
-<valant-input-maze *ngIf="showInput" [maze]="maze" (mazeChange)="mazeChange($event)">
-</valant-input-maze>
+  <div class="relative">
+    <div *ngIf="editOrPlay" class="flex-horizontal">
+      <p>*Preview only</p>
+      <button class="save" (click)="toggleEditOrPlay()" [disabled]="!isValidMaze">
+        {{isValidMaze ? 'Save Maze and Play': 'Invalid Maze'}}
+      </button>
+    </div>
+    
+    <button *ngIf="!editOrPlay" class="link" (click)="toggleEditOrPlay()">
+      Edit Maze
+    </button>
+
+    <valant-input-maze *ngIf="showInput" [maze]="maze" (mazeChange)="mazeChange($event)" (close)="showInput=false">
+    </valant-input-maze>
+  </div>
+</div>
 
 <valant-maze-display [maze]="maze" [editOrPlay]="editOrPlay" (mazeChange)="mazeChange($event)">
 </valant-maze-display>

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { LoggingService } from '../../services/logging/logging.service';
 import { MazeService } from '../../services/maze.service';
-import { MessageService } from '../../services/message.service';
+import { MessageService } from '../../services/message/message.service';
 
 @Component({
   selector: 'valant-edit-play-maze',
   templateUrl: './edit-play-maze.component.html',
-  styleUrls: ['./edit-play-maze.component.less']
+  styleUrls: ['./edit-play-maze.component.less'],
 })
 export class EditPlayMazeComponent implements OnInit {
 
@@ -19,9 +19,11 @@ export class EditPlayMazeComponent implements OnInit {
     return this.messageService.message;
   }
 
-  constructor(private mazeService: MazeService,
+  constructor(
+    private mazeService: MazeService,
     private messageService: MessageService,
-    private logger: LoggingService) { }
+    private logger: LoggingService
+  ) {}
 
   ngOnInit(): void {
     this.getMaze();
@@ -29,10 +31,10 @@ export class EditPlayMazeComponent implements OnInit {
 
   public toggleEditOrPlay() {
     this.editOrPlay = !this.editOrPlay;
-    this.messageService.message = '';
-    
+    this.messageService.setMessage('');
+
     if (this.editOrPlay)
-      this.messageService.message = 'Click any box to edit';
+      this.messageService.setMessage('Click each square to cycle through options, or');
     else {
       this.showInput = false;
       this.saveMaze();
@@ -41,33 +43,15 @@ export class EditPlayMazeComponent implements OnInit {
 
   public mazeChange(maze: string[][]) {
     this.maze = maze;
-    this.isValidMaze = this.checkValidMaze(maze);
+    this.isValidMaze = this.mazeService.isValidMaze(maze);
   }
 
-  private checkValidMaze(maze: string[][]): boolean {
-    var s = false, e = false;
-
-    for (var i=0;i<maze.length;i++) {
-      for (var j=0;j<maze[i].length;j++) {
-        const val = maze[i][j];
-        if ((val === 'S' && s) || (val === 'E' && e))
-          return false;
-        else if (val === 'S') s = true;
-        else if (val === 'E') e = true;
-        else if (val !== 'X' && val !== 'O')
-          return false;
-      }
-    }
-
-    return s && e;
-  }
-
-  private getMaze(): void {
+  public getMaze(): void {
     this.mazeService.getMaze().subscribe({
       next: (response: any[]) => {
         this.mazeChange(response);
         this.setMazeStartMessage();
-        this.logger.log('Got maze from server');
+        this.logger.log('Successfully got maze');
       },
       error: (error) => {
         this.logger.error('Error getting maze: ', error);
@@ -75,7 +59,7 @@ export class EditPlayMazeComponent implements OnInit {
     });
   }
 
-  private saveMaze() {
+  public saveMaze() {
     this.mazeService.saveMaze(this.maze).subscribe({
       next: (response: any[]) => {
         this.mazeChange(response);
@@ -83,14 +67,13 @@ export class EditPlayMazeComponent implements OnInit {
         this.logger.log('Successfully saved maze');
       },
       error: (error) => {
-        this.logger.error('Error getting maze: ', error);
+        this.logger.error('Error saving maze: ', error);
       },
-    })
+    });
   }
 
   private setMazeStartMessage() {
     const [i, j] = this.mazeService.getMazeStartCoords(this.maze);
     this.messageService.setCoords(i, j);
   }
-
 }
