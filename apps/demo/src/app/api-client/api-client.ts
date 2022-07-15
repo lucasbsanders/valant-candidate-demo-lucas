@@ -29,8 +29,8 @@ export class Client {
     /**
      * @return Success
      */
-    maze(): Observable<any[]> {
-        let url_ = this.baseUrl + "/Maze";
+    moves(): Observable<string[]> {
+        let url_ = this.baseUrl + "/Moves";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -42,11 +42,11 @@ export class Client {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processMaze(response_);
+            return this.processMoves(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processMaze(<any>response_);
+                    return this.processMoves(<any>response_);
                 } catch (e) {
                     return <Observable<string[]>><any>_observableThrow(e);
                 }
@@ -55,36 +55,7 @@ export class Client {
         }));
     }
 
-    /**
-     * @return Success
-     */
-     moves(): Observable<any[]> {
-      let url_ = this.baseUrl + "/Moves";
-      url_ = url_.replace(/[?&]$/, "");
-
-      let options_ : any = {
-          observe: "response",
-          responseType: "blob",
-          headers: new HttpHeaders({
-              "Accept": "text/plain"
-          })
-      };
-
-      return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-          return this.processMaze(response_);
-      })).pipe(_observableCatch((response_: any) => {
-          if (response_ instanceof HttpResponseBase) {
-              try {
-                  return this.processMaze(<any>response_);
-              } catch (e) {
-                  return <Observable<string[]>><any>_observableThrow(e);
-              }
-          } else
-              return <Observable<string[]>><any>_observableThrow(response_);
-      }));
-  }
-
-    protected processMaze(response: HttpResponseBase): Observable<any> {
+    protected processMoves(response: HttpResponseBase): Observable<string[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -103,6 +74,111 @@ export class Client {
             }));
         }
         return _observableOf<string[]>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    mazeAll(): Observable<string[][]> {
+        let url_ = this.baseUrl + "/Maze";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processMazeAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processMazeAll(<any>response_);
+                } catch (e) {
+                    return <Observable<string[][]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<string[][]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processMazeAll(response: HttpResponseBase): Observable<string[][]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : <string[][]>JSON.parse(_responseText, this.jsonParseReviver);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string[][]>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    maze(body: string[][] | null | undefined): Observable<string[][]> {
+        let url_ = this.baseUrl + "/Maze";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processMaze(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processMaze(<any>response_);
+                } catch (e) {
+                    return <Observable<string[][]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<string[][]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processMaze(response: HttpResponseBase): Observable<string[][]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : <string[][]>JSON.parse(_responseText, this.jsonParseReviver);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string[][]>(<any>null);
     }
 }
 

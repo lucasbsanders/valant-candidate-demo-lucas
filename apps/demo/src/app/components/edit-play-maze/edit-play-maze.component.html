@@ -1,0 +1,18 @@
+<div class="row flex-center">
+  <p *ngIf="message.length > 0">{{message}}</p>
+
+  <div class="flex-horizontal">
+    <button [ngClass]="{'link' : !editOrPlay, 'save': editOrPlay}" (click)="toggleEditOrPlay()" [disabled]="!isValidMaze">
+      {{editOrPlay ? (isValidMaze ? 'Save Maze and Play': 'Invalid Maze') : 'Edit Maze'}}
+    </button>
+    <button *ngIf="editOrPlay" class="save" (click)="showInput=!showInput">
+      Input Maze as Text
+    </button>
+  </div>
+</div>
+
+<valant-input-maze *ngIf="showInput" [maze]="maze" (mazeChange)="mazeChange($event)">
+</valant-input-maze>
+
+<valant-maze-display [maze]="maze" [editOrPlay]="editOrPlay" (mazeChange)="mazeChange($event)">
+</valant-maze-display>

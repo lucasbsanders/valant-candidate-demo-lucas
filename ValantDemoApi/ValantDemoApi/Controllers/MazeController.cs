@@ -11,6 +11,7 @@ namespace ValantDemoApi.Controllers
     {
         private readonly ILogger<MazeController> _logger;
         private readonly IMemoryCache _memoryCache;
+        private readonly string MAZE_KEY = "Maze_Key";
 
         public MazeController(ILogger<MazeController> logger, IMemoryCache memoryCache)
         {
@@ -28,7 +29,20 @@ namespace ValantDemoApi.Controllers
         [HttpGet("/Maze")]
         public IEnumerable<IEnumerable<string>> GetCurrentMaze()
         {
-          return getDefaultList();
+          IEnumerable<IEnumerable<string>> result;
+          if (!this._memoryCache.TryGetValue(MAZE_KEY, out result)) {
+            this._memoryCache.Set(MAZE_KEY, getDefaultList());
+            return (IEnumerable<IEnumerable<string>>)this._memoryCache.Get(MAZE_KEY);
+          }
+          
+          return result;
+        }
+
+        [HttpPost("/Maze")]
+        public IEnumerable<IEnumerable<string>> UpdateCurrentMaze(IEnumerable<IEnumerable<string>> maze)
+        {
+          this._memoryCache.Set(MAZE_KEY, maze);
+          return (IEnumerable<IEnumerable<string>>)this._memoryCache.Get(MAZE_KEY);
         }
 
         protected IEnumerable<IEnumerable<string>> getDefaultList()

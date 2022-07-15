@@ -4,16 +4,6 @@
 </header>
 <main>
 
-  <valant-maze></valant-maze>
-  
-  <br>
-  <hr>
-  <br>
-
-
-  <h2>Places you can move from here:</h2>
-  <span *ngFor="let space of moves; index as i">
-    {{space}}{{i < moves.length - 1 ? ', ' : ''}}
-  </span>
+  <valant-edit-play-maze></valant-edit-play-maze>
 
 </main>

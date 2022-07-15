@@ -9,29 +9,12 @@ import { MazeService } from './services/maze.service';
 })
 export class AppComponent implements OnInit {
 
-  public title = 'Lucas demo for Valant';
-  public moves: string[];
+  public title = 'Lucas Maze Demo';
 
-  constructor(private logger: LoggingService,
-    private mazeService: MazeService) {}
+  constructor(private logger: LoggingService) {}
 
   ngOnInit() {
     this.logger.log('Welcome to the AppComponent');
-    this.getMoves();
   }
 
-  
-
-  
-
-  private getMoves(): void {
-    this.mazeService.getMoves().subscribe({
-      next: (response: any[]) => {
-        this.moves = response;
-      },
-      error: (error) => {
-        this.logger.error('Error getting moves: ', error);
-      },
-    });
-  }
 }

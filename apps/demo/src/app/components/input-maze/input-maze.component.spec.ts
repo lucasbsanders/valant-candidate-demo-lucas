@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MazeComponent } from './maze.component';
+import { InputMazeComponent } from './input-maze.component';
 
-describe('MazeComponent', () => {
-  let component: MazeComponent;
-  let fixture: ComponentFixture<MazeComponent>;
+describe('InputMazeComponent', () => {
+  let component: InputMazeComponent;
+  let fixture: ComponentFixture<InputMazeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MazeComponent ]
+      declarations: [ InputMazeComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MazeComponent);
+    fixture = TestBed.createComponent(InputMazeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

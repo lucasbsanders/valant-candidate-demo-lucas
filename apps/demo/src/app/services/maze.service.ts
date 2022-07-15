@@ -10,32 +10,29 @@ export class MazeService {
   constructor(private httpClient: ValantDemoApiClient.Client) {}
 
   public getMaze(): Observable<any[]> {
-    return this.httpClient.maze();
+    return this.httpClient.mazeAll();
   }
 
   public getMoves(): Observable<any[]> {
     return this.httpClient.moves();
   }
 
-  public validateMaze(mazeInput: string[][]) {
-    var foundS = false, foundE = false;
+  public saveMaze(maze: string[][]): Observable<any> {
+    return this.httpClient.maze(maze);
+  }
 
-    for (var i=0;i<mazeInput.length;i++) {
-      for (var j=0;j<mazeInput[i].length;j++) {
-        const value = mazeInput[i][j];
-        const letters = ["S", "E", "X", "O"];
-      
-        if (!letters.includes(value) ||
-          (value === "S" && foundS) ||
-          (value === "E" && foundE))
-          return false;
-
-        if (value === "S") foundS = true;
-        if (value === "E") foundE = true;
-
+  public getMazeStartCoords(maze: string[][]) {
+    if (maze) {
+      for (var i=0;i<maze.length;i++) {
+        for (var j=0;j<maze[i].length;j++) {
+          if (maze[i][j] === 'S') {
+            return [i, j];
+          }
+        }
       }
     }
 
-    return true;
-  } 
+    return [-1, -1];
+  }
+
 }
