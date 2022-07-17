@@ -10,7 +10,7 @@ export class InputMazeComponent implements OnInit {
 
   @Input() maze: string[][];
   @Output() mazeChange = new EventEmitter<string[][]>();
-  @Output() close = new EventEmitter<void>();
+  @Output() closeInput = new EventEmitter<void>();
 
   public validInput = false;
   public mazeAsText = '';
@@ -37,12 +37,12 @@ export class InputMazeComponent implements OnInit {
   public saveMaze() {
     if (this.mazeService.isValidMaze(this.maze)) {
       this.mazeChange.emit(this.maze);
-      this.close.emit();
+      this.closeBox();
     }
   }
 
   public closeBox() {
-    this.close.emit();
+    this.closeInput.emit();
   }
 
 }

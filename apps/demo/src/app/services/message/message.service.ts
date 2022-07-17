@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class MessageService {
 
-  public message: string = '';
+  public message = '';
 
   constructor() { }
 
@@ -18,7 +18,4 @@ export class MessageService {
     setTimeout(() => alert(msg), 50);
   }
 
-  public setCoords(i: number, j: number) {
-    this.message = `Move with arrow keys or by clicking the buttons. Current Coordinates: [${i}, ${j}]`;
-  }
 }

@@ -48,7 +48,7 @@ export class EditPlayMazeComponent implements OnInit {
 
   public getMaze(): void {
     this.mazeService.getMaze().subscribe({
-      next: (response: any[]) => {
+      next: (response: string[][]) => {
         this.mazeChange(response);
         this.setMazeStartMessage();
         this.logger.log('Successfully got maze');
@@ -61,7 +61,7 @@ export class EditPlayMazeComponent implements OnInit {
 
   public saveMaze() {
     this.mazeService.saveMaze(this.maze).subscribe({
-      next: (response: any[]) => {
+      next: (response: string[][]) => {
         this.mazeChange(response);
         this.setMazeStartMessage();
         this.logger.log('Successfully saved maze');
@@ -73,7 +73,6 @@ export class EditPlayMazeComponent implements OnInit {
   }
 
   private setMazeStartMessage() {
-    const [i, j] = this.mazeService.getMazeStartCoords(this.maze);
-    this.messageService.setCoords(i, j);
+    this.messageService.setMessage('Option 1: use arrow keys to move. Option 2: click the arrow buttons on the square.');
   }
 }

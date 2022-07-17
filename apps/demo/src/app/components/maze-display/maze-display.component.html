@@ -2,7 +2,7 @@
   <div *ngFor="let space of row; index as j" class="inline-block">
 
     <div class="square flex-center relative"
-    [ngClass]="{'current-selection': isSelectedSquare(i, j) && !this.editOrPlay, 'start': space === 'S', 'end': space === 'E', 'path': space === 'O', 'wall': space === 'X'}"
+    [ngClass]="{'current-selection': isSelectedSquare(i, j) && !editOrPlay, 'start': space === 'S', 'end': space === 'E', 'path': space === 'O', 'wall': space === 'X'}"
     (click)="clickEditSpace(i, j)">
       <p>{{space}}</p>
       <button class="arrow right" *ngIf="isValidMove(i, j, 'right')" (click)="moveFromSpaceIfValid(i, j, 'right')">

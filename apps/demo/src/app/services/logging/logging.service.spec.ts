@@ -9,7 +9,21 @@ describe('LoggingService', () => {
     service = TestBed.inject(LoggingService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('should log a message', () => {
+    const msg = '123';
+    spyOn(console, 'log');
+
+    service.log(msg);
+
+    expect(console.log).toHaveBeenCalledWith(msg);
+  });
+
+  it('should create a browser alert', () => {
+    const msg = 'ABC';
+    spyOn(console, 'error');
+
+    service.error(msg);
+
+    expect(console.error).toHaveBeenCalledWith(msg);
   });
 });

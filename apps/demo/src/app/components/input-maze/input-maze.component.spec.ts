@@ -1,25 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { Shallow } from 'shallow-render';
+import { AppModule } from '../../app.module';
+import { MazeService } from '../../services/maze.service';
 import { InputMazeComponent } from './input-maze.component';
 
 describe('InputMazeComponent', () => {
-  let component: InputMazeComponent;
-  let fixture: ComponentFixture<InputMazeComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ InputMazeComponent ]
-    })
-    .compileComponents();
-  });
+  let shallow: Shallow<InputMazeComponent>;
+  const defaultMaze = [['S', 'O'], ['X', 'E']];
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InputMazeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    shallow = new Shallow(InputMazeComponent, AppModule)
+    .mock(MazeService, {
+      isValidMaze: () => true
+    });
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it("displays a textarea with the input maze content", async () => {
+    const { find } = await shallow.render({bind: { maze: defaultMaze }});
+
+    console.log(find("textarea").nativeElement.value);
+
+    expect(find("textarea").nativeElement.value)
+      .toBe(defaultMaze.map(row => row.join('')).join('\n'));
   });
 });

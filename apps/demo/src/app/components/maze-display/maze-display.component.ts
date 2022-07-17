@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MazeService } from '../../services/maze.service';
 import { MessageService } from '../../services/message/message.service';
 
@@ -7,7 +7,7 @@ import { MessageService } from '../../services/message/message.service';
   templateUrl: './maze-display.component.html',
   styleUrls: ['./maze-display.component.less'],
 })
-export class MazeDisplayComponent implements OnInit {
+export class MazeDisplayComponent implements OnInit, OnChanges {
 
   @Input() maze: string[][];
   @Input() editOrPlay: boolean;
@@ -59,7 +59,7 @@ export class MazeDisplayComponent implements OnInit {
       if (this.maze[this.coords[0]][this.coords[1]] === 'E') {
         this.messageService.setAlert('Congratulations, you finished the maze!');
       } else {
-        this.messageService.setCoords(this.coords[0], this.coords[1]);
+        this.messageService.setMessage('Option 1: use arrow keys to move. Option 2: click the arrow buttons on the square.');
       }
     }
   }

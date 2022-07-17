@@ -1,6 +1,6 @@
 <div class="row flex-center">
   <div class="flex-horizontal">
-    <p *ngIf="message.length > 0">{{message}}</p>
+    <p id="message" *ngIf="message.length > 0">{{message}}</p>
 
     <button *ngIf="editOrPlay" class="link" (click)="showInput=!showInput">
       Input Maze as Text

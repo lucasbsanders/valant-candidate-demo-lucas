@@ -1,4 +1,3 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { Shallow } from 'shallow-render';
 import { AppModule } from '../../app.module';
@@ -9,44 +8,32 @@ import { MessageService } from '../../services/message/message.service';
 import { SilentMessage } from '../../services/message/silent-message.service';
 import { EditPlayMazeComponent } from './edit-play-maze.component';
 
-const mockMazeService = {
-  getMaze: jest.fn(() => of([])),
-  saveMaze: jest.fn((input) => of(input))
-};
-
 describe('EditPlayMazeComponent', () => {
-  let component: Shallow<EditPlayMazeComponent>;
-  let fixture: ComponentFixture<EditPlayMazeComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ EditPlayMazeComponent ]
-    })
-    .compileComponents();
-  });
+  let shallow: Shallow<EditPlayMazeComponent>;
+  const defaultMaze = [['S', 'O'], ['X', 'E']];
+  const silentMessageMock = new SilentMessage();
 
   beforeEach(() => {
-    component = new Shallow(EditPlayMazeComponent, AppModule)
-      .provideMock({ provide: MazeService, useValue: mockMazeService })
-      .provideMock({ provide: MessageService, useClass: SilentMessage })
-      .provideMock({ provide: LoggingService, useClass: SilentLogger});
-    jest.clearAllMocks();
-    fixture = TestBed.createComponent(EditPlayMazeComponent);
+    shallow = new Shallow(EditPlayMazeComponent, AppModule)
+    .mock(MazeService, {
+      getMaze: () => of(defaultMaze),
+      saveMaze: (maze: string[][]) => of(maze),
+      isValidMaze: () => true
+    })
+    .provideMock({ provide: MessageService, useValue: silentMessageMock })
+    .provideMock({ provide: LoggingService, useClass: SilentLogger });
   });
 
-  it('should render', async () => {
-    const rendering = await component.render();
-    expect(rendering).toBeTruthy();
+  it("displays an Edit Maze button by default", async () => {
+    const { find } = await shallow.render();
+
+    expect(find("button.link").nativeElement.textContent).toContain("Edit Maze");
   });
 
-  it('gets stuff from the API on init', async () => {
-    await component.render();
-    expect(mockMazeService.getMaze).toHaveBeenCalledTimes(1);
+  it("displays the message from the message service", async () => {
+    const { find } = await shallow.render();
+
+    expect(find("p#message").nativeElement.textContent).toBe(silentMessageMock.message);
   });
 
-  it('saves stuff from the API on save', async () => {
-    await component.render();
-    fixture.componentInstance.saveMaze();
-    expect(mockMazeService.saveMaze).toHaveBeenCalledTimes(1);
-  });
 });
