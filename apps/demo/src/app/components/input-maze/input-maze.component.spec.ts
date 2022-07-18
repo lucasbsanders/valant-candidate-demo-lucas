@@ -17,8 +17,6 @@ describe('InputMazeComponent', () => {
   it("displays a textarea with the input maze content", async () => {
     const { find } = await shallow.render({bind: { maze: defaultMaze }});
 
-    console.log(find("textarea").nativeElement.value);
-
     expect(find("textarea").nativeElement.value)
       .toBe(defaultMaze.map(row => row.join('')).join('\n'));
   });
